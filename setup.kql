@@ -1,0 +1,117 @@
+.execute database script <|
+// ── employee ──────────────────────────────────────────
+.create table employee (
+    id:                     int,
+    firstname:              string,
+    surname:                string,
+    dob:                    datetime,
+    payband:                int,
+    nationalinsurancenumber:string,
+    phone:                  string,
+    emergencycontactname:   string,
+    emergencycontactphone:  string,
+    salaryaccountnumber:    string,
+    salarysortcode:         string,
+    unionmembershipno:      string,
+    managerid:              int,
+    managerfirstname:       string,
+    managersurname:         string
+)
+.create table ['orders'] (
+    id:       int,
+    ['dated']:    datetime,
+    product:  int,
+    supplier: int,
+    amount:   decimal
+)
+// ── payband ───────────────────────────────────────────
+.create table payband (
+    id:            int,
+    monthlysalary: decimal,
+    annualbonus:   decimal
+)
+// ── product ───────────────────────────────────────────
+.create table product (
+    id:           int,
+    name:         string,
+    sellingprice: decimal
+)
+// ── sale ──────────────────────────────────────────────
+.create table sale (
+    id:        int,
+    productid: int,
+    username:  string,
+    amount:    decimal
+)
+// ── stock ─────────────────────────────────────────────
+.create table stock (
+    id:         int,
+    supplierid: int,
+    price:      decimal
+)
+// ── supplier ──────────────────────────────────────────
+.create table supplier (
+    id:            int,
+    name:          string,
+    contactname:   string,
+    contactnumber: string,
+    contactemail:  string
+)
+// ── user (reserved keyword — wrapped in ['...']) ──────
+.create table ['user'] (
+    username:       string,
+    password:       string,
+    cardnumber:     string,
+    cardexpirydate: datetime,
+    cardcsv:        string,
+    dob:            datetime,
+    gender:         string
+)
+.set-or-append payband <|
+datatable(id:int, monthlysalary:decimal, annualbonus:decimal)
+[
+    1, 2010.74,   500.00,
+    2, 2950.00,  1000.00,
+    3, 3822.50,  2500.00,
+    4, 5000.00,  4750.00,
+    5, 6525.00,  9950.00,
+    6, 8333.66, 12500.00,
+    7, 10536.08, 19100.00
+]
+// ── supplier ──────────────────────────────────────────────────────
+.ingest into table supplier (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Supplier.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── product ───────────────────────────────────────────────────────
+.ingest into table product (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Product.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── stock ─────────────────────────────────────────────────────────
+.ingest into table stock (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Stock.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── order (reserved keyword) ──────────────────────────────────────
+.ingest into table ['orders'] (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Order.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── user (reserved keyword) ───────────────────────────────────────
+// Note: FORCE_NOT_NULL ("gender") has no ADX equivalent.
+// ADX does not enforce NOT NULL — empty strings will be ingested as-is.
+.ingest into table ['user'] (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/User.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── sale ──────────────────────────────────────────────────────────
+.ingest into table sale (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Sale.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
+// ── employee ──────────────────────────────────────────────────────
+.ingest into table employee (
+    h'https://aa4workshopdemo.blob.core.windows.net/globexdb/Employee.csv'
+)
+with (format="csv", ignoreFirstRecord=true)
