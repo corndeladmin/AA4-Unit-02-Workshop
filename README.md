@@ -14,7 +14,12 @@ If you've done everything correctly it should look something like this:
 
 ![Successful Setup](./images/db_setup_result.png)
 
+Now you can list the tables on the LHS and query the data using the main window (you can delete the big query you copied in now).
 
+If you want to view the data in a table you can simply type the table name in the query window and press the blue "Run" button.
+
+ADX queries use [the Kusto Query Language (KQL)](https://learn.microsoft.com/en-us/kusto/query/?view=microsoft-fabric) natively but if you prefer SQL you can prefix the command with "--" and most basic commands should work (like "SELECT").
+- You won't *need* to use KQL or SQL for this exercise
 
 ## Identify the problems
 
