@@ -7,6 +7,8 @@ For this task you are required to perform a GDPR & Data Quality Audit for a samp
 ### Step 1: Login to Azure Data Explorer
 Navigate to [Azure Data Explorer (ADX)](https://dataexplorer.azure.com/) and login with either a work or a personal account. Choose the option to create a free cluster (it doesn't matter what you name it - just accept the defaults).
 
+> If ADX is blocked for any reason you can instead [view the dataset in Excel instead](./Spreadsheet%20Dataset.xlsx)
+
 ### Step 2: Setup the Database
 Once you've signed in and setup your free cluster please select the "Query" icon on the left hand side. From here you should see a query window with a large blue "Run button". In the query window copy the text from [this setup script](./setup.kql) and past it into the window. Next click run and wait for it to complete. 
 
